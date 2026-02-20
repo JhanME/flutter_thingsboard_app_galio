@@ -1,5 +1,5 @@
 {
-  "appTitle": "Thingsboard",
+  "appTitle": "Galio",
   "home": "首頁",
   "alarms": "{count, plural, =1{警報} other{警報}}",
   "@alarms": {
@@ -23,7 +23,7 @@
   "auditLogs": "審計日誌",
   "logout": "登出",
   "login": "登入",
-  "logoDefaultValue": "Thingsboard Logo",
+  "logoDefaultValue": "Galio Logo",
   "loginToYourAccount": "登入您的帳號",
   "email": "電子郵件",
   "emailRequireText": "電子郵件為必填項目",

@@ -14,8 +14,8 @@ ThemeData tbDarkTheme = ThemeData(
   primarySwatch: AppColors.darkPrimarySwatch,
   brightness: Brightness.dark,
   colorScheme: darkTheme.colorScheme.copyWith(
-    primary: AppColors.darkPrimaryBlue,
-    secondary: Colors.deepOrange,
+    primary: AppColors.darkPrimaryGreen,
+    secondary: AppColors.primaryGreen,
   ),
   
   inputDecorationTheme: InputDecorationTheme(
@@ -29,7 +29,7 @@ ThemeData tbDarkTheme = ThemeData(
       Set<WidgetState> states,
     ) {
       final Color color = states.contains(WidgetState.focused)
-          ? AppColors.darkPrimaryBlue
+          ? AppColors.darkPrimaryGreen
           : AppColors.textTertiary;
       return TbTextStyles.labelSmall.copyWith(color: color);
     }),
@@ -40,7 +40,7 @@ ThemeData tbDarkTheme = ThemeData(
       color: AppColors.textError,
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: AppColors.darkPrimaryBlue, width: 2),
+      borderSide: const BorderSide(color: AppColors.darkPrimaryGreen, width: 2),
       borderRadius: BorderRadius.circular(4),
     ),
     enabledBorder: OutlineInputBorder(
@@ -59,13 +59,13 @@ ThemeData tbDarkTheme = ThemeData(
       borderSide: const BorderSide(color: AppColors.borderError),
       borderRadius: BorderRadius.circular(4),
     ),
-    focusColor: AppColors.darkPrimaryBlue,
+    focusColor: AppColors.darkPrimaryGreen,
   ),
   
   textSelectionTheme: TextSelectionThemeData(
-    cursorColor: AppColors.darkPrimaryBlue,
-    selectionHandleColor: AppColors.darkPrimaryBlue,
-    selectionColor: AppColors.darkPrimaryBlue.withValues(alpha: 0.2),
+    cursorColor: AppColors.darkPrimaryGreen,
+    selectionHandleColor: AppColors.darkPrimaryGreen,
+    selectionColor: AppColors.darkPrimaryGreen.withValues(alpha: 0.2),
   ),
   
   appBarTheme: const AppBarTheme(
@@ -78,7 +78,7 @@ ThemeData tbDarkTheme = ThemeData(
   
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: AppColors.black,
-    selectedItemColor: AppColors.darkPrimaryBlue,
+    selectedItemColor: AppColors.darkPrimaryGreen,
     unselectedItemColor: AppColors.surfaceLight,
     showSelectedLabels: true,
     showUnselectedLabels: true,
@@ -87,7 +87,7 @@ ThemeData tbDarkTheme = ThemeData(
   
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: AppColors.darkPrimaryBlue,
+      foregroundColor: AppColors.darkPrimaryGreen,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       textStyle: TbTextStyles.labelMedium,
       shape: RoundedRectangleBorder(
@@ -98,8 +98,8 @@ ThemeData tbDarkTheme = ThemeData(
   
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: AppColors.darkPrimaryBlue,
-      side: const BorderSide(color: AppColors.darkPrimaryBlue),
+      foregroundColor: AppColors.darkPrimaryGreen,
+      side: const BorderSide(color: AppColors.darkPrimaryGreen),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       textStyle: TbTextStyles.labelMedium,
       shape: RoundedRectangleBorder(
@@ -110,7 +110,7 @@ ThemeData tbDarkTheme = ThemeData(
   
   filledButtonTheme: FilledButtonThemeData(
     style: FilledButton.styleFrom(
-      backgroundColor: AppColors.darkPrimaryBlue,
+      backgroundColor: AppColors.darkPrimaryGreen,
       foregroundColor: AppColors.white,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       textStyle: TbTextStyles.labelMedium,
@@ -122,7 +122,7 @@ ThemeData tbDarkTheme = ThemeData(
   
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: AppColors.darkPrimaryBlue,
+      backgroundColor: AppColors.darkPrimaryGreen,
       foregroundColor: AppColors.white,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       textStyle: TbTextStyles.labelMedium,

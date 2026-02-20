@@ -1,5 +1,5 @@
 {
-  "appTitle": "Thingsboard",
+  "appTitle": "Galio",
   "home": "主页",
   "alarms": "{count, plural, =1{告警} other{告警}}",
   "@alarms": {
@@ -23,7 +23,7 @@
   "auditLogs": "审计报告",
   "logout": "登出",
   "login": "登录",
-  "logoDefaultValue": "Thingsboard Logo",
+  "logoDefaultValue": "Galio Logo",
   "loginToYourAccount": "登录你的账号",
   "email": "邮箱",
   "emailRequireText": "邮箱是必填项",

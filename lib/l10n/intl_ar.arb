@@ -1,5 +1,5 @@
 {
-  "appTitle": "ThingsBoard",
+  "appTitle": "Galio",
   "home": "الرئيسية",
   "devices": "{count, plural, =1{Device} other{Devices}}",
   "@devices": {
@@ -15,7 +15,7 @@
   "auditLogs": "سجلات التدقيق",
   "logout": "تسجيل خروج",
   "login": "تسجيل دخول",
-  "logoDefaultValue": "شعار ثينغز بورد",
+  "logoDefaultValue": "Galio Logo",
   "loginToYourAccount": "تسجيل الدخول إلى حسابك",
   "email": "البريد الإلكتروني",
   "emailRequireText": "البريد الإلكتروني مطلوب.",

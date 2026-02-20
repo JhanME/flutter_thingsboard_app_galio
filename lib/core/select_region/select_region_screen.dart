@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thingsboard_app/config/routes/router.dart';
 import 'package:thingsboard_app/config/themes/tb_text_styles.dart';
 import 'package:thingsboard_app/constants/assets_path.dart';
@@ -18,7 +17,7 @@ class SelectRegionScreen extends TbContextStatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SvgPicture.asset(ThingsboardImage.thingsboardBigLogo),
+            Image.asset(ThingsboardImage.thingsboardBigLogo),
             const SizedBox(height: 166),
             Expanded(
               child: Padding(

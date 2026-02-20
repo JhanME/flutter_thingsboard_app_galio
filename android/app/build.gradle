@@ -35,9 +35,9 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
-def customScheme = getDartDefineValue('thingsboardOAuth2CallbackUrlScheme') ?: 'org.thingsboard.app.auth'
-def customLabel = getDartDefineValue('androidApplicationName') ?: 'Thingsboard app'
-def appLinksUrlHost = getDartDefineValue('appLinksUrlHost') ?: 'demo.thingsboard.io'
+def customScheme = getDartDefineValue('thingsboardOAuth2CallbackUrlScheme') ?: 'dev.galio.app.auth'
+def customLabel = getDartDefineValue('androidApplicationName') ?: 'Galio'
+def appLinksUrlHost = getDartDefineValue('appLinksUrlHost') ?: 'tb.galio.dev'
 def webPathPrefix = getDartDefineValue('webPathPrefix') ?: '/api/noauth/qr'
 def appLinksUrlScheme = getDartDefineValue('appLinksUrlScheme') ?: 'https'
 android {
@@ -49,7 +49,7 @@ namespace "org.thingsboard.app"
     }
 
     defaultConfig {
-        applicationId getDartDefineValue('androidApplicationId')?: "org.thingsboard.app"
+        applicationId getDartDefineValue('androidApplicationId')?: "dev.galio.app"
         minSdkVersion 24
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()

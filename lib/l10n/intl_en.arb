@@ -1,5 +1,5 @@
 {
-  "appTitle": "ThingsBoard",
+  "appTitle": "Galio",
   "home": "Home",
   "devices": "{count, plural, =1{Device} other{Devices}}",
   "@devices": {
@@ -15,7 +15,7 @@
   "auditLogs": "Audit Logs",
   "logout": "Log Out",
   "login": "Log In",
-  "logoDefaultValue": "ThingsBoard Logo",
+  "logoDefaultValue": "Galio Logo",
   "loginToYourAccount": "Login to your account",
   "email": "Email",
   "emailRequireText": "Email is required.",

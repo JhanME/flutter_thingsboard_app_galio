@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thingsboard_app/config/routes/router.dart';
 
 import 'package:thingsboard_app/constants/assets_path.dart';
@@ -30,13 +29,10 @@ class DashboardsAppbar extends StatelessWidget {
         title: Center(
           child: SizedBox(
             height: 24,
-            child: SvgPicture.asset(
+            child: Image.asset(
               ThingsboardImage.thingsBoardWithTitle,
-              colorFilter: ColorFilter.mode(
-                Theme.of(context).primaryColor,
-                BlendMode.srcIn,
-              ),
-              semanticsLabel: 'ThingsBoard Logo',
+              fit: BoxFit.contain,
+              semanticLabel: 'Galio Logo',
             ),
           ),
         ),

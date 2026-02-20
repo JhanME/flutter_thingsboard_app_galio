@@ -161,13 +161,13 @@ BottomNavigationBarThemeData bottomNavigationBarTheme(Color primaryColor) =>
 
 AppBarTheme appBarTheme =
     AppBarTheme(
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
-  backgroundColor: AppColors.white,
-  foregroundColor: AppColors.textPrimary,
-  iconTheme: const IconThemeData(color: AppColors.iconSecondary),
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+  backgroundColor: AppColors.darkBackground,
+  foregroundColor: AppColors.white,
+  iconTheme: const IconThemeData(color: AppColors.white),
   elevation: 0,
   titleTextStyle: TbTextStyles.titleXs.copyWith(
-            color: AppColors.textPrimary,
+            color: AppColors.white,
           ),
   centerTitle: false,
 );
