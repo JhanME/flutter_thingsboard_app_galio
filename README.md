@@ -1,6 +1,6 @@
 # Galio Electronics — Mobile App
 
-Aplicación móvil IoT de **Galio Electronics**, construida sobre Flutter y conectada al servidor ThingsBoard en [tb.galio.dev](http://tb.galio.dev/).
+Aplicación móvil IoT de **Galio Electronics**, construida sobre Flutter y conectada al servidor ThingsBoard en [tb.galio.dev](https://tb.galio.dev).
 
 ---
 
@@ -120,7 +120,7 @@ Archivo: **`lib/constants/app_constants.dart`**
 ```dart
 static const thingsBoardApiEndpoint = String.fromEnvironment(
   'thingsboardApiEndpoint',
-  defaultValue: 'http://tb.galio.dev/',  // ← Cambia la URL aquí
+  defaultValue: 'https://tb.galio.dev',  // ← Cambia la URL aquí
 );
 ```
 

@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "Bash(wc:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(flutter pub outdated:*)",
+      "Bash(yes:*)",
+      "Bash(\"C:/Users/mocai/AppData/Local/Android/Sdk/cmdline-tools/latest/bin/sdkmanager\" --licenses)",
+      "Bash(\"C:/Users/mocai/AppData/Local/Android/Sdk/cmdline-tools/latest/bin/sdkmanager.bat\" --licenses)",
+      "Bash(dart run:*)",
+      "Bash(git -C /c/Users/mocai/Documents/flutter_thingsboard_app_galio log --oneline -10)"
     ]
   }
 }

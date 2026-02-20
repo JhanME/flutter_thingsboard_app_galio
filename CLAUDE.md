@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-ThingsBoard Mobile Application (Community Edition) — an open-source Flutter IoT platform mobile client for Android and iOS. **Web platform is not supported.** Built on the `thingsboard_client` Dart package to communicate with ThingsBoard server.
+ThingsBoard Mobile Application (Community Edition) — an open-source Flutter IoT platform mobile client for Android and iOS. **Web platform is not supported.** Built on the `thingsboard_client` Dart package to communicate with ThingsBoard server. This fork is rebranded for **Galio Electronics** (primary color: `#28A745` Galio Green).
 
 ## Build & Development Commands
 
@@ -22,16 +22,21 @@ flutter run
 flutter run --dart-define=API_CALLS=true --dart-define=VERBOSE=true --dart-define=showAppVersion=true
 
 # Run with custom server/branding configuration
-flutter run --dart-define=thingsboardOAuth2CallbackUrlScheme=org.thingsboard.app.auth \
-            --dart-define=appLinksUrlHost=demo.thingsboard.io \
-            --dart-define=androidApplicationId=org.thingsboard.app \
-            --dart-define=androidApplicationName="Thingsboard app"
+flutter run --dart-define=thingsboardApiEndpoint=https://tb.galio.dev \
+            --dart-define=thingsboardOAuth2CallbackUrlScheme=dev.galio.app.auth \
+            --dart-define=appLinksUrlHost=tb.galio.dev \
+            --dart-define=androidApplicationId=dev.galio.app \
+            --dart-define=androidApplicationName="Galio"
+
+# Regenerate launcher icons and splash screen
+flutter pub run flutter_launcher_icons
+flutter pub run flutter_native_splash:create
 
 # Analyze code
 flutter analyze
 ```
 
-No test directory exists currently. Test dependencies (`flutter_test`, `mocktail`, `bloc_test`, `integration_test`) are configured in pubspec.yaml.
+A basic `test/widget_test.dart` smoke test exists. No unit or integration tests are written yet. Test dependencies (`flutter_test`, `mocktail`, `bloc_test`, `integration_test`) are configured in pubspec.yaml.
 
 ## Architecture
 
@@ -144,9 +149,15 @@ Registered via GetIt with interface/implementation pairs. Key services: TbClient
 ### Theme System (`lib/config/themes/`)
 
 - `tb_theme.dart` — `tbTheme(primarySwatch, primaryColor, accentColor)` factory configures all Material components
-- `app_colors.dart` — Brand colors (primary: `0xFF305680`) and semantic color constants
+- `app_colors.dart` — Galio brand colors (primary: `#28A745` Galio Green, surface/app bar: `#343A40` dark gray) and semantic color constants
 - `design_tokens.dart` — Spacing, border radius, icon size, button height constants
 - `tb_text_styles.dart` — Semantic typography definitions
+
+### Constants (`lib/constants/`)
+
+- `app_constants.dart` — ThingsBoard endpoint, OAuth config (reads dart-define flags)
+- `assets_path.dart` — Centralized image/SVG asset paths; use this instead of inline strings
+- `enviroment_variables.dart` — `API_CALLS`, `VERBOSE`, `showAppVersion` flag parsing
 
 ### Localization
 
@@ -169,6 +180,6 @@ Uses `package:lint/strict.yaml` with `custom_lint`. Notable overrides:
 
 ## Platform Configuration
 
-- **Android:** minSdk 24, targetSdk 36, compileSdk 35, Java 17, namespace `org.thingsboard.app`
-- **iOS:** iOS 13.0+, Swift 5.0, permissions configured for Camera/Location/Notifications/Bluetooth
-- Build-time customization via `--dart-define` flags (OAuth callback scheme, app links host, application ID, application name)
+- **Android:** minSdk 24, targetSdk 36, compileSdk 35, Java 17, default application ID `dev.galio.app`
+- **iOS:** iOS 13.0+, Swift 5.0, permissions configured for Camera/Location/Notifications/Bluetooth, default bundle ID `dev.galio.app`
+- Build-time customization via `--dart-define` flags (API endpoint, OAuth callback scheme, app links host, application ID, application name)

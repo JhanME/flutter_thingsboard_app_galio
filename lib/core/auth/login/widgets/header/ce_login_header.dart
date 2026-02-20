@@ -6,16 +6,11 @@ class LoginHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 12),
-      child: Row(
-        children: [
-          Image.asset(
-            ThingsboardImage.thingsBoardWithTitle,
-            height: 30,
-            fit: BoxFit.contain,
-          ),
-        ],
+    return Center(
+      child: Image.asset(
+        ThingsboardImage.thingsboardBigLogo,
+        height: 140,
+        fit: BoxFit.contain,
       ),
     );
   }
