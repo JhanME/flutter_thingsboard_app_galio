@@ -10,6 +10,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:thingsboard_app/app_bloc_observer.dart';
+import 'package:thingsboard_app/constants/app_constants.dart';
 import 'package:thingsboard_app/constants/enviroment_variables.dart';
 import 'package:thingsboard_app/core/select_region/model/region.dart';
 import 'package:thingsboard_app/firebase_options.dart';
@@ -23,6 +24,12 @@ Future<void> main() async {
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  if (ThingsboardAppConstants.thingsBoardApiEndpoint.isEmpty) {
+    FlutterNativeSplash.remove();
+    runApp(const _MissingConfigApp());
+    return;
+  }
   await Hive.initFlutter();
          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   Hive.registerAdapter(RegionAdapter());
@@ -55,4 +62,47 @@ Future<void> main() async {
   }
   FlutterNativeSplash.remove();
   runApp(const ProviderScope(child: ThingsboardApp()));
+}
+
+class _MissingConfigApp extends StatelessWidget {
+  const _MissingConfigApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: const Color(0xFF343A40),
+        body: const Center(
+          child: Padding(
+            padding: EdgeInsets.all(32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.cloud_off, size: 64, color: Color(0xFF28A745)),
+                SizedBox(height: 24),
+                Text(
+                  'Configuración no encontrada',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 12),
+                Text(
+                  'Ejecuta la app con un archivo de configuración:\n\n'
+                  'flutter run --dart-define-from-file=config/dev.json\n\n'
+                  'Copia config/config.example.json como punto de partida.',
+                  style: TextStyle(color: Color(0xFFADB5BD), fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

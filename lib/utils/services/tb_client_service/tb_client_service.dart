@@ -88,7 +88,7 @@ class TbClientService implements ITbClientService {
 
         return;
       }
-      _overlayService.showErrorNotification((_) => e.message!);
+      _overlayService.showErrorNotification((_) => e.message ?? 'Unknown error');
     });
   }
 

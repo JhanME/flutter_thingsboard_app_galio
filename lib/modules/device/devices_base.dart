@@ -274,17 +274,14 @@ class _DeviceCardState extends State<DeviceCard> {
                                     children: [
                                       Flexible(
                                         fit: FlexFit.tight,
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            widget.device.field('name')!,
-                                            style: const TextStyle(
-                                              color: Color(0xFF282828),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              height: 20 / 14,
-                                            ),
+                                        child: Text(
+                                          widget.device.field('name')!,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            color: Color(0xFF282828),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            height: 20 / 14,
                                           ),
                                         ),
                                       ),
@@ -445,17 +442,14 @@ class _DeviceCardState extends State<DeviceCard> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        widget.device.field('name')!,
-                        style: const TextStyle(
-                          color: Color(0xFF282828),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          height: 20 / 14,
-                        ),
+                    Text(
+                      widget.device.field('name')!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Color(0xFF282828),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        height: 20 / 14,
                       ),
                     ),
                   ],

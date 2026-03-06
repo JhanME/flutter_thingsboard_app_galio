@@ -48,3 +48,8 @@ app_constants.json
 # FVM Version Cache
 .fvm/
 WARP.md
+
+# Environment config files (contain secrets/private endpoints — never commit)
+config/dev.json
+config/stage.json
+config/prod.json

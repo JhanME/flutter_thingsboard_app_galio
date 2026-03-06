@@ -1,0 +1,13 @@
+{
+  "thingsboardApiEndpoint": "https://your-tb-server.example.com",
+  "thingsboardOAuth2CallbackUrlScheme": "dev.galio.app.auth",
+  "appLinksUrlHost": "your-tb-server.example.com",
+  "androidApplicationId": "dev.galio.app",
+  "androidApplicationName": "Galio",
+  "thingsboardIosAppSecret": "",
+  "thingsboardAndroidAppSecret": "",
+  "navigationType": "",
+  "API_CALLS": "false",
+  "VERBOSE": "false",
+  "showAppVersion": "false"
+}

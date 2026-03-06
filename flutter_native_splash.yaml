@@ -2,7 +2,7 @@ flutter_native_splash:
   color: "#ffffff"
   image: assets/branding/galio_logo_light.png
   android_12:
-    image: assets/branding/logo_icon.png
+    image: assets/branding/galio_logo_light.png
     color: "#ffffff"
     icon_background_color: "#ffffff"
   android: true

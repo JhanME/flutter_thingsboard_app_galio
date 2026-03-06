@@ -1,0 +1,291 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\geometry{margin=2.5cm}
+
+% Galio brand colors
+\definecolor{galiogreen}{HTML}{28A745}
+\definecolor{galiodark}{HTML}{343A40}
+\definecolor{galiogray}{HTML}{ADB5BD}
+\definecolor{codebg}{HTML}{F4F4F4}
+
+% Code listing style
+\lstdefinestyle{json}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{galiogray},
+  captionpos=b,
+  numbers=left,
+  numberstyle=\tiny\color{galiogray},
+}
+
+\lstdefinestyle{bash}{
+  backgroundcolor=\color{galiodark},
+  basicstyle=\ttfamily\footnotesize\color{white},
+  breaklines=true,
+  frame=single,
+  captionpos=b,
+}
+
+% Header / footer
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{galiogreen}{\textbf{Galio Electronics}}}
+\rhead{US-PJ3-16}
+\cfoot{\thepage}
+
+% Section color
+\titleformat{\section}{\large\bfseries\color{galiodark}}{}{0em}{}[\color{galiogreen}\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{galiodark}}{}{0em}{}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=galiogreen,
+  urlcolor=galiogreen,
+}
+
+% ─────────────────────────────────────────────
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+  {\color{galiogreen}\rule{\linewidth}{2pt}}\\[0.5cm]
+  {\LARGE\bfseries US-PJ3-16}\\[0.3cm]
+  {\Large Parametrizar endpoints y entornos\\(dev / stage / prod)}\\[0.3cm]
+  {\color{galiogreen}\rule{\linewidth}{2pt}}\\[1cm]
+  \begin{tabular}{rl}
+    \textbf{Proyecto}   & Galio Mobile App (Flutter) \\
+    \textbf{Equipo}     & MOBILE-FLUTTER, PLATFORM-TB, OPS-DEVOPS, QA-DOCS \\
+    \textbf{Estado}     & Implementado \\
+    \textbf{Fecha}      & Febrero 2026 \\
+  \end{tabular}
+  \vfill
+  {\color{galiogray}\small Documento generado como parte del proceso de desarrollo interno.}
+\end{titlepage}
+
+% ─────────────────────────────────────────────
+\section{Contexto y objetivo}
+
+La aplicación mobile de Galio se comunica con una instancia privada de
+ThingsBoard (TB) en \texttt{tb.galio.dev}. Antes de esta historia, la URL del
+servidor estaba hardcodeada como \texttt{defaultValue} en
+\texttt{app\_constants.dart}, lo que impedía cambiar de entorno sin modificar
+código fuente.
+
+\textbf{Objetivo:} eliminar todo hardcode de endpoints y proveer una
+configuración limpia, versionable y segura para los entornos
+\textit{dev}, \textit{stage} y \textit{prod}.
+
+% ─────────────────────────────────────────────
+\section{Estrategia elegida: \texttt{--dart-define-from-file}}
+
+Flutter 3.7+ soporta pasar un archivo JSON en tiempo de compilación mediante
+la flag \texttt{--dart-define-from-file}. Cada clave del JSON se convierte en
+una variable de entorno accesible con \texttt{String.fromEnvironment()}, que
+es exactamente el mecanismo que ya usaba \texttt{app\_constants.dart}.
+
+\subsection{Por qué esta estrategia}
+
+\begin{itemize}
+  \item Builds directamente sobre el mecanismo existente --- sin cambios en la
+        lógica de lectura de constantes.
+  \item Un solo archivo JSON por entorno concentra toda la configuración.
+  \item CI/CD solo cambia qué archivo JSON se pasa al build.
+  \item Sin dependencias externas ni paquetes adicionales.
+  \item Extensible: si en el futuro se necesitan Flutter Flavors (apps
+        separadas por entorno en el mismo dispositivo), se agregan encima sin
+        romper nada.
+\end{itemize}
+
+% ─────────────────────────────────────────────
+\section{Archivos creados}
+
+\subsection{Estructura de carpetas}
+
+\begin{lstlisting}[style=bash]
+config/
+  config.example.json   <-- va al repositorio (plantilla sin secretos)
+  dev.json              <-- .gitignore (emulador / local)
+  stage.json            <-- .gitignore (staging)
+  prod.json             <-- .gitignore (tb.galio.dev)
+\end{lstlisting}
+
+\subsection{Variables de configuración (\texttt{config.example.json})}
+
+\begin{lstlisting}[style=json, caption=config/config.example.json]
+{
+  "thingsboardApiEndpoint": "https://your-tb-server.example.com",
+  "thingsboardOAuth2CallbackUrlScheme": "dev.galio.app.auth",
+  "appLinksUrlHost": "your-tb-server.example.com",
+  "androidApplicationId": "dev.galio.app",
+  "androidApplicationName": "Galio",
+  "thingsboardIosAppSecret": "",
+  "thingsboardAndroidAppSecret": "",
+  "navigationType": "",
+  "API_CALLS": "false",
+  "VERBOSE": "false",
+  "showAppVersion": "false"
+}
+\end{lstlisting}
+
+\subsection{Diferencias entre entornos}
+
+\begin{center}
+\begin{tabular}{llccc}
+  \toprule
+  \textbf{Variable} & \textbf{dev} & \textbf{stage} & \textbf{prod} \\
+  \midrule
+  \texttt{thingsboardApiEndpoint} & \texttt{http://10.0.2.2:8080} & \texttt{https://tb-stage.galio.dev} & \texttt{https://tb.galio.dev} \\
+  \texttt{androidApplicationName} & Galio Dev & Galio Stage & Galio \\
+  \texttt{VERBOSE} & true & false & false \\
+  \texttt{API\_CALLS} & true & false & false \\
+  \texttt{showAppVersion} & true & true & false \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Nota:} \texttt{10.0.2.2} es la IP del host desde el emulador Android.
+Para iOS Simulator usar \texttt{localhost}.
+
+% ─────────────────────────────────────────────
+\section{Cambios en código}
+
+\subsection{Eliminación del hardcode (\texttt{app\_constants.dart})}
+
+Se eliminó el \texttt{defaultValue} de \texttt{thingsBoardApiEndpoint}:
+
+\begin{lstlisting}[style=json, language={}, caption=lib/constants/app\_constants.dart (antes)]
+static const thingsBoardApiEndpoint = String.fromEnvironment(
+  'thingsboardApiEndpoint',
+  defaultValue: 'https://tb.galio.dev',  // <- hardcode eliminado
+);
+\end{lstlisting}
+
+Si no se pasa configuración, \texttt{fromEnvironment} devuelve cadena vacía,
+lo que activa la validación de arranque descrita a continuación.
+
+\subsection{Validación de arranque (\texttt{main.dart})}
+
+Se agregó una guarda al inicio de \texttt{main()} antes de cualquier
+inicialización:
+
+\begin{lstlisting}[style=json, language={}, caption=lib/main.dart]
+if (ThingsboardAppConstants.thingsBoardApiEndpoint.isEmpty) {
+  FlutterNativeSplash.remove();
+  runApp(const _MissingConfigApp());
+  return;
+}
+\end{lstlisting}
+
+\texttt{\_MissingConfigApp} muestra una pantalla de error legible con el
+comando exacto que el desarrollador debe ejecutar para arrancar correctamente.
+No lanza excepciones ni produce crasheos silenciosos.
+
+% ─────────────────────────────────────────────
+\section{Seguridad: \texttt{.gitignore}}
+
+Los archivos \texttt{dev.json}, \texttt{stage.json} y \texttt{prod.json} se
+excluyeron del repositorio:
+
+\begin{lstlisting}[style=bash]
+# .gitignore
+config/dev.json
+config/stage.json
+config/prod.json
+\end{lstlisting}
+
+Solo \texttt{config.example.json} se versiona. Nunca deben committearse
+secretos ni URLs privadas.
+
+% ─────────────────────────────────────────────
+\section{Comandos de uso diario}
+
+\begin{lstlisting}[style=bash]
+# Copiar plantilla la primera vez
+cp config/config.example.json config/dev.json
+# (editar config/dev.json con los valores reales)
+
+# Desarrollo (emulador Android)
+flutter run --dart-define-from-file=config/dev.json
+
+# Staging
+flutter run --dart-define-from-file=config/stage.json
+
+# Produccion
+flutter run --dart-define-from-file=config/prod.json
+
+# Build release
+flutter build apk --dart-define-from-file=config/prod.json
+flutter build ipa --dart-define-from-file=config/prod.json
+\end{lstlisting}
+
+% ─────────────────────────────────────────────
+\section{CI/CD: inyección de config desde secretos}
+
+Los archivos de config no están en el repo, por lo que el pipeline debe
+generarlos antes del build a partir de secretos del repositorio:
+
+\begin{lstlisting}[style=bash, caption=Ejemplo GitHub Actions]
+- name: Crear config de produccion
+  run: echo '${{ secrets.PROD_CONFIG_JSON }}' > config/prod.json
+
+- name: Build APK
+  run: flutter build apk --dart-define-from-file=config/prod.json
+\end{lstlisting}
+
+\texttt{PROD\_CONFIG\_JSON} es un secret del repositorio con el contenido
+completo del JSON de producción.
+
+% ─────────────────────────────────────────────
+\section{Checklist de conectividad}
+
+Antes de reportar un error de conexión, verificar este checklist:
+
+\begin{enumerate}[label=\textcolor{galiogreen}{\checkmark}]
+  \item \textbf{URL accesible} --- El dispositivo/emulador puede alcanzar el
+        host configurado en \texttt{thingsboardApiEndpoint}.
+  \item \textbf{Puerto abierto} --- Puerto \texttt{443} (HTTPS) o \texttt{8080}
+        (HTTP) no bloqueado por firewall.
+  \item \textbf{TLS válido} --- Certificado no expirado y firmado por CA
+        reconocida (sin autofirmados, salvo config extra).
+  \item \textbf{Health endpoint} --- \texttt{GET /api/noauth/health} devuelve
+        \texttt{\{"status":"UP"\}}.
+  \item \textbf{OAuth scheme} --- Si se usa SSO, el
+        \texttt{thingsboardOAuth2CallbackUrlScheme} coincide con lo registrado
+        en la instancia TB.
+  \item \textbf{App links host} --- \texttt{appLinksUrlHost} coincide con el
+        dominio real del servidor.
+  \item \textbf{Archivo JSON cargado} --- La app arranca sin mostrar la
+        pantalla de ``Configuración no encontrada''.
+\end{enumerate}
+
+% ─────────────────────────────────────────────
+\section{Criterios de aceptación verificados}
+
+\begin{center}
+\begin{tabular}{lc}
+  \toprule
+  \textbf{Criterio} & \textbf{Estado} \\
+  \midrule
+  App conecta a instancia privada con config limpia & \textcolor{galiogreen}{\checkmark} \\
+  No hay hardcodes críticos en código               & \textcolor{galiogreen}{\checkmark} \\
+  Checklist de conectividad existe y sirve          & \textcolor{galiogreen}{\checkmark} \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
