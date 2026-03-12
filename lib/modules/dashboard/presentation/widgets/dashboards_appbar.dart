@@ -22,19 +22,13 @@ class DashboardsAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TbAppBar(
-      //  canGoBack: leading != null,
-        leading:
-            leading,
+        leading: leading,
         elevation: dashboardState ? 0 : 8,
-        title: Center(
-          child: SizedBox(
-            height: 36,
-            child: Image.asset(
-              ThingsboardImage.thingsBoardWithTitle,
-              fit: BoxFit.contain,
-              semanticLabel: 'Galio Logo',
-            ),
-          ),
+        title: Image.asset(
+          ThingsboardImage.galioLogoDark,
+          height: 50,
+          fit: BoxFit.contain,
+          semanticLabel: 'Galio Logo',
         ),
         actions: [
           if (getIt<ITbClientService>().client.isSystemAdmin())
@@ -42,8 +36,8 @@ class DashboardsAppbar extends StatelessWidget {
               icon: const Icon(Icons.search),
               onPressed: () {
                 getIt<ThingsboardAppRouter>()
-                // translate-me-ignore-next-line
-                .navigateTo('/tenants?search=true');
+                    // translate-me-ignore-next-line
+                    .navigateTo('/tenants?search=true');
               },
             ),
           if (leading != null) const SizedBox(width: 56),

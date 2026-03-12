@@ -1,5 +1,6 @@
 abstract class ThingsboardImage {
   static const thingsBoardWithTitle = 'assets/images/galio_logo_with_title.png';
+  static const galioLogoDark = 'assets/branding/galio_logo_oscuro_2.png';
   static const thingsboard = 'assets/images/galio_logo_with_title.png';
   static const thingsboardBigLogo = 'assets/images/galio_logo_big.png';
   static const thingsboardCenter = 'assets/images/galio_logo_icon.png';
