@@ -53,3 +53,8 @@ WARP.md
 config/dev.json
 config/stage.json
 config/prod.json
+
+#Agents
+.claude
+CLAUDE.md
+
