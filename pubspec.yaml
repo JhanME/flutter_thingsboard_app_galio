@@ -82,7 +82,6 @@ dependencies:
       url: https://github.com/thingsboard/esp_provisioning_softap
   flutter_slidable: ^4.0.0
   flutter_native_splash: ^2.4.4
-  super_tooltip: ^2.1.0
   go_router: ^17.0.0
   hooks_riverpod: ^2.6.1
   country_picker: ^2.0.27

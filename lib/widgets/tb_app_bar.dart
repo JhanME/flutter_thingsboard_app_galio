@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:super_tooltip/super_tooltip.dart';
-import 'package:thingsboard_app/config/themes/app_colors.dart';
 import 'package:thingsboard_app/config/themes/tb_text_styles.dart';
 import 'package:thingsboard_app/locator.dart';
 import 'package:thingsboard_app/modules/main/providers/navigation_provider.dart';
@@ -38,8 +36,6 @@ class TbAppBar extends HookConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = useMemoized(SuperTooltipController.new);
-
     final morePages = ref.watch(
       navigationProvider.select((n) => n.bottomBarPages),
     );
@@ -57,7 +53,7 @@ class TbAppBar extends HookConsumerWidget implements PreferredSizeWidget {
           leadingWidth: getLeading(context, isMainPage) is EmptyLeading ? 20 : 40,
           titleSpacing: 4,
           leading: getLeading(context, isMainPage),
-          title: buildTitle(context, controller),
+          title: buildTitle(context),
           actions: actions,
           elevation: elevation ?? 8,
           shadowColor: shadowColor ?? const Color(0xFFFFFFFF).withAlpha(150),
@@ -90,12 +86,12 @@ class TbAppBar extends HookConsumerWidget implements PreferredSizeWidget {
     return const EmptyLeading();
   }
 
-  Widget? buildTitle(BuildContext context, SuperTooltipController controller) {
+  Widget? buildTitle(BuildContext context) {
     if (title == null) {
       return title;
     }
     if (title is Text) {
-      return buildTooltip(title! as Text, context, controller);
+      return buildTooltip(title! as Text);
     }
     if (title is Column) {
       final column = title! as Column;
@@ -104,7 +100,7 @@ class TbAppBar extends HookConsumerWidget implements PreferredSizeWidget {
       for (final e in (title! as Column).children) {
         if (e is Text) {
           if (!isTitleFound) {
-            newContent.add(buildTooltip(e, context, controller));
+            newContent.add(buildTooltip(e));
             isTitleFound = true;
             continue;
           }
@@ -122,12 +118,7 @@ class TbAppBar extends HookConsumerWidget implements PreferredSizeWidget {
     return title;
   }
 
-  Widget buildTooltip(
-    Text text,
-    BuildContext context,
-    SuperTooltipController controller,
-  ) {
-    final padding = MediaQuery.paddingOf(context).top;
+  Widget buildTooltip(Text text) {
     return AutoSizeText(
       text.data ?? '',
       maxLines: 1,
@@ -135,42 +126,15 @@ class TbAppBar extends HookConsumerWidget implements PreferredSizeWidget {
       overflowReplacement: Row(
         children: [
           Flexible(child: text),
-          SuperTooltip(
-            borderRadius: 4,
-            arrowLength: 8,
-            arrowBaseWidth: 16,
-            top: padding,
-            borderColor: Colors.transparent,
-            popupDirection: TooltipDirection.left,
-            boxShadows: [
-              BoxShadow(
-                color: AppColors.black.withValues(alpha: .15),
-                blurRadius: 6,
-                spreadRadius: 2,
-              ),
-              BoxShadow(
-                color: AppColors.black.withValues(alpha: .3),
-                blurRadius: 2,
-                offset: const Offset(0, 1),
-              ),
-            ],
-            shadowColor: Colors.transparent,
-            content: Text(
-              text.data ?? '',
-              style: TbTextStyles.labelSmall.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+          Tooltip(
+            message: text.data ?? '',
+            preferBelow: false,
+            textStyle: TbTextStyles.labelSmall.copyWith(
+              fontWeight: FontWeight.w500,
             ),
-            controller: controller,
-            barrierColor: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                controller.showTooltip();
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(4),
-                child: Icon(Icons.info_outline),
-              ),
+            child: const Padding(
+              padding: EdgeInsets.all(4),
+              child: Icon(Icons.info_outline),
             ),
           ),
         ],
