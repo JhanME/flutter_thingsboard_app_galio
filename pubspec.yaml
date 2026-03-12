@@ -100,7 +100,6 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
   mocktail: ^1.0.3
-  bloc_test: ^9.1.7
   flutter_lints: ^2.0.3
   build_runner: ^2.4.9
   custom_lint: ^0.7.0
